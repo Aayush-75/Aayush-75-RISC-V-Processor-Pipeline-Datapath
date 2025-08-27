@@ -1,0 +1,14 @@
+module ALU(
+	input [31:0] Src_reg_1,		//R Type Instruction
+	input [31:0] Src_reg_2,		//R,I Type Instruction
+	input [15:0] Imm_operand,	//I Type Instruction
+	input [5:0] Sh_amt,		//R Type Instruction
+	output reg [31:0] dest_reg	//R,I Type Instruction	
+);
+
+always @(*)
+begin
+
+end
+
+endmodule
