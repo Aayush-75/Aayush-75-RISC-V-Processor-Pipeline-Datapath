@@ -1,0 +1,55 @@
+module IFU(
+	input clk,
+	input reset,
+	input [15:0] imm_address,
+	input [31:0] imm_address_jump,
+	input beq,
+	input bneq,
+	input bltz,
+	input jump,
+	output reg [31:0] pc,
+	output reg [31:0] current_pc
+
+);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************logic for incrementing pc************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+always @(posedge clk)
+begin
+	if(reset == 1)
+	begin 
+		pc<=0;
+	end
+	else if(beq == 0 && bneq == 0 && bltz == 0 && jump == 0)
+	begin
+		pc<=pc+4;
+	end
+	else if(beq == 1 || bneq == 1 || bltz == 1)
+	begin
+		pc<=pc+imm_address;
+	end
+	else if(jump == 1)
+	begin
+		pc<=pc+imm_address_jump;
+	end
+end
+
+always @(posedge clk)
+begin
+	if(reset == 1)
+	begin
+		current_pc<=0;
+	end
+	else if(jump == 0)
+	begin 
+		current_pc<=pc + 4;
+	end
+	else if(jump == 1)
+	begin
+		current_pc<=current_pc;
+	end
+end
+
+endmodule
